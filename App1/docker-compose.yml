@@ -1,0 +1,30 @@
+version: '2'
+services:
+    php:
+        build: ./php
+        restart: always
+        volumes:
+            - ./app:/var/www/app
+        container_name: "App"
+    nginx:
+        image: nginx:latest
+        restart: always
+        ports:
+          - "4888:80"
+        volumes:
+            - ./app:/var/www/app
+        depends_on:
+            - php
+    mysql:
+        image: mysql:8
+        restart: always
+        ports:
+          - "4333:3306"
+        environment:
+          MYSQL_ROOT_PASSWORD: toor
+        container_name: "AppMysql"
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+          - "4081:8080"
