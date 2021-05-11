@@ -19,32 +19,39 @@ class UsersRepository extends ServiceEntityRepository
         parent::__construct($registry, Users::class);
     }
 
-    // /**
-    //  * @return Users[] Returns an array of Users objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    //Новый пользователь
+    public function new($login, $pass){
 
-    /*
-    public function findOneBySomeField($value): ?Users
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+      $em = $this->getEntityManager();
+
+      $user = new Users();
+      $user->setLogin($login);
+      $user->setPassword($pass);
+      $user->setRole('user');
+
+      $em->persist($user);
+
+      $em->flush();
+
+      return 'ok';
+
     }
-    */
+
+    //update пользователь
+    public function update($id ,$login, $pass){
+
+      $em = $this->getEntityManager();
+
+      $user = $em->getRepository(Users::class)->findOneBy(['id'=>$id]);
+      $user->setLogin($login);
+      $user->setPassword($pass);
+      $user->setRole('user');
+
+      $em->persist($user);
+
+      $em->flush();
+
+      return 'ok';
+
+    }
 }

@@ -3,19 +3,35 @@
 {% block title %}Главная страница!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<label for="login">Login</label>
+<input type="text" id="login" name="login" value="">
 
-<div class="example-wrapper">
-  привет
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<label for="pass">Pass</label>
+<input type="password" id="pass" name="pass" value="">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/overvoid/GIT/SymfonyLessons/AppSymfony/app/src/Controller/HomePageController.php'|file_link(0) }}">src/Controller/HomePageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/overvoid/GIT/SymfonyLessons/AppSymfony/app/templates/home_page/index.html.twig'|file_link(0) }}">templates/home_page/index.html.twig</a></code></li>
-    </ul>
-</div>
+<button type="button" id="reg" name="button">Registration</button>
+
+<!-- JQUERY INIT -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $('#reg').on('click', function(){
+
+      let login = $('#login').val();
+      let pass = $('#pass').val();
+
+      $.post('/api/registration',{
+        login:login,
+        pass:pass
+        }).done(function(data){
+          alert(data);
+        });
+
+    });
+
+  });
+</script>
+
 {% endblock %}
